@@ -1,0 +1,29 @@
+.nav {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    background: $blue;
+    
+    &__list {
+        display: flex;
+        flex-direction: row;
+        list-style-type: none;
+        width: 50%;
+
+        &-item {
+            text-align: center;
+            width: 20%;
+            text-decoration: none;
+
+            .active {
+                //color: black;
+                text-decoration-line: underline;
+            }
+        }
+        
+        &-link {
+            text-decoration: none;
+            color: $link-white;
+        }
+    }
+}

@@ -1,15 +1,134 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);.btn {
+@import url(https://fonts.googleapis.com/css?family=Nunito);@import url(https://fonts.googleapis.com/css?family=Roboto);* {
+  font-family: "Roboto", sans-serif;
+}
+
+.container {
+  width: 90%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.section {
+  width: 80%;
+}
+
+.btn {
   font-size: 16px;
   font-weight: 400;
+  outline: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 5px;
+  border-radius: 5px;
 }
 
 .btn--small {
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
+}
+
+.btn--red {
+  background-color: #e3342f;
+  color: #ffffff;
+}
+
+.btn--red:hover {
+  background-color: #b2221e;
+}
+
+.btn--green {
+  background-color: #38c172;
+  color: #ffffff;
+}
+
+.btn--green:hover {
+  background-color: #30a05f;
+}
+
+.btn--edit {
+  width: 25px;
+  height: 30px;
+  padding: 9px 3px 1px 12px;
+}
+
+.icon {
+  width: 15px;
+  height: 15px;
+}
+
+.table {
+  width: 80%;
+}
+
+.table__header {
+  border-bottom: 1px solid grey;
 }
 
 .table__header-item {
-  width: 20%;
+  max-width: 21%;
   font-weight: 600;
+}
+
+.table__row .actions {
+  display: flex;
+  flex-direction: row;
+  height: 40px;
+}
+
+.table__form {
+  width: 40px;
+  height: 40px;
+}
+
+.form__container {
+  display: flex;
+  flex-direction: column;
+}
+
+.form__input {
+  width: 200px;
+  border-radius: 5px;
+  outline: none;
+  box-shadow: none;
+  padding: 5px;
+  border: 1px solid #3490dc;
+}
+
+.nav {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  background: #3490dc;
+}
+
+.nav__list {
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+  width: 50%;
+}
+
+.nav__list-item {
+  text-align: center;
+  width: 20%;
+  text-decoration: none;
+}
+
+.nav__list-item .active {
+  -webkit-text-decoration-line: underline;
+          text-decoration-line: underline;
+}
+
+.nav__list-link {
+  text-decoration: none;
+  color: #ffffff;
 }
 

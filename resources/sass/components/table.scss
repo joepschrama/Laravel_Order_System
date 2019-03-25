@@ -1,7 +1,11 @@
 .table {
+    width: 80%;
+
     &__header {
+        border-bottom: 1px solid grey;
+        
         &-item {
-            width: 20%;
+            max-width: 21%;
             font-weight: 600;
         }
     }
@@ -10,5 +14,16 @@
         &-item {
 
         }
+        
+        .actions {
+            display: flex;
+            flex-direction: row;
+            height: 40px;
+        }
+    }
+    
+    &__form {
+        width: 40px;
+        height: 40px;
     }
 }

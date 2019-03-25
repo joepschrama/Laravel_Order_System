@@ -3,7 +3,7 @@
 @section('content')
 <div>
   <div>
-    Add Category
+    Add Role
   </div>
   <div>
     @if ($errors->any())
@@ -15,10 +15,10 @@
         </ul>
       </div><br />
     @endif
-      <form method="post" action="{{ route('category.store') }}">
+      <form method="post" action="{{ route('role.store') }}">
           <div>
               @csrf
-              <label for="name">Category Name:</label>
+              <label for="name">Role Name:</label>
               <input class="form__input" type="text" name="name"/>
           </div>
           <button class="btn btn--green" type="submit">Add</button>

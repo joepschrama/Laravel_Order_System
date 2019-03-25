@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Category;
+use App\Role;
+use Illuminate\Support\Facades\Hash;
 
-class CategoryController extends Controller
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +15,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        $roles = Role::all();
 
-        return view('category.index', compact('categories'));
+        return view('role.index', compact('roles'));
     }
 
     /**
@@ -26,7 +27,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('category.create');
+        return view('role.create');
     }
 
     /**
@@ -37,14 +38,16 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+    
         $request->validate([
-            'name'=>'required',
-          ]);
-          $category = new Category([
+            'name' => ['required', 'string', 'max:255'],
+        ]);
+        $role = new Role([
             'name' => $request->get('name'),
-          ]);
-          $category->save();
-          return redirect('/category')->with('success', 'Category has been added');
+        ]);
+        $role->save();
+          
+        return redirect('/role')->with('success', 'Role has been added');
     }
 
     /**
@@ -64,9 +67,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit(Role $role)
     {
-        return view('category.edit', compact('category'));
+        return view('role.edit', compact('role'));
     }
 
     /**
@@ -76,16 +79,16 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, Role $role)
     {
         $request->validate([
-            'name'=>'required',
-          ]);
+            'name' => ['required', 'string', 'max:255'],
+        ]);
+        
+        $role->name = $request->get('name');
+        $role->save();
     
-          $category->name = $request->get('name');
-          $category->save();
-    
-          return redirect('/category')->with('success', 'Category has been updated');
+        return redirect('/role')->with('success', 'Role has been updated');
     }
 
     /**
@@ -94,9 +97,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy(Role $role)
     {
-        $category->delete();
-        return redirect('/category')->with('success', 'Category has been deleted');
+        $role->delete();
+        return redirect('/role')->with('success', 'Role has been deleted');
     }
 }

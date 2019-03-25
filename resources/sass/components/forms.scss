@@ -1,0 +1,19 @@
+.form {
+    &__container {
+        display: flex;
+        flex-direction: column;
+        
+        &-item {
+            
+        }
+    }
+    
+    &__input {
+        width: 200px;
+        border-radius: 5px;
+        outline: none;
+        box-shadow: none;
+        padding: 5px;
+        border: 1px solid $blue;
+    }
+}
