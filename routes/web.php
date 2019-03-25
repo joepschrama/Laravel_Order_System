@@ -18,6 +18,7 @@ Route::get('/', function () {
 Route::resource('category', 'CategoryController')->except('show');
 Route::resource('product', 'ProductController')->except('show');
 Route::resource('role', 'RoleController')->except('show');
+Route::resource('table', 'TableController')->except('show');
 
 
 Auth::routes();
