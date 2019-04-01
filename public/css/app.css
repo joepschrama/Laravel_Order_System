@@ -132,3 +132,12 @@ body {
   color: #ffffff;
 }
 
+.nav__dropdown:hover .nav__dropdown-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav__dropdown-content {
+  display: none;
+}
+

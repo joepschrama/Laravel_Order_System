@@ -15,16 +15,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::resource('user', 'UserController');
 Route::resource('category', 'CategoryController')->except('show');
 Route::resource('product', 'ProductController')->except('show');
 Route::resource('role', 'RoleController')->except('show');
 Route::resource('table', 'TableController')->except('show');
-
+Route::resource('order', 'OrderController')->except('show');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('user', 'UserController');
 
 

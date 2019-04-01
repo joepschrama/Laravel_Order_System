@@ -1,0 +1,150 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Order;
+use App\Product;
+use App\Table;
+use App\OrderProduct;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
+
+class OrderController extends Controller
+{
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $orders = Order::all();
+
+        return view('order.index', compact('orders'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $products = Product::all();
+        $tables = Table::all();
+
+        return view('order.create', compact('products', 'tables'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'products' => ['required'],
+            'table_nr' => ['required'],
+        ]);
+        $order = new Order([
+            'served' => false,
+            'time' => Carbon::now(),
+            'table_id' => $request->get('table_nr'),
+            'done' => false,
+        ]);
+        $order->save();
+        
+        //dd($request);
+
+        foreach($request['products'] as $product) {
+            $productOrder = new OrderProduct();
+            $productOrder->order_id = $order->id;
+            $productOrder->product_id = $product;
+            $productOrder->save();
+        }
+        
+        return redirect('/order')->with('success', 'Order has been added');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Order $order)
+    {
+        $products = Product::all();
+        $tables = Table::all();
+
+        return view('order.edit', compact('order', 'products', 'tables'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Order $order)
+    {
+        $request->validate([
+            'served' => ['required', 'string', 'max:255'],
+            'done' => ['required', 'string', 'max:255'],
+            'products' => ['required'],
+            'table_nr' => ['required'],
+        ]);
+        
+        $order->served = $request->get('served');
+        $order->done = $request->get('done');
+        $order->table_id = $request->get('table_nr');
+        $order->save();
+        
+        $products = $request['products'];
+        if (isset($products)) {
+            $order->products()->detach();
+            foreach($products as $product) {
+                $productOrder = new OrderProduct();
+                $productOrder->order_id = $order->id;
+                $productOrder->product_id = $product;
+                $productOrder->save();
+            }
+        }
+
+        // $ordersTable = Table::find(1)->orders;
+        // dd($ordersTable);
+
+        return redirect('/order')->with('success', 'Order has been updated');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Order $order)
+    {
+        $order->delete();
+        return redirect('/order')->with('success', 'Order has been deleted');
+    }
+}

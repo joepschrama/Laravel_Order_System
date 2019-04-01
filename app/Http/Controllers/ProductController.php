@@ -8,6 +8,10 @@ use App\Category;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -47,6 +51,7 @@ class ProductController extends Controller
             'ingredients' => ['required', 'string', 'max:200'],
             'category' => ['required'],
         ]);
+
         $product = new Product([
             'name' => $request->get('name'),
             'price' => $request->get('price'),
@@ -54,7 +59,6 @@ class ProductController extends Controller
             'ingredients' => $request->get('ingredients'),
             'category_id' => $request->get('category'),
         ]);
-        
         $product->save();
           
         return redirect('/product')->with('success', 'Product has been added');

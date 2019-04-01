@@ -33,6 +33,6 @@
         @endforeach
     </tbody>
   </table>
-  <a class="btn btn--small btn--green" href="{{ route('category.create')}}">Add user <i class="fas fa-plus"></i></a>
+  <a class="btn btn--small btn--green" href="{{ route('category.create')}}">Add category <i class="fas fa-plus"></i></a>
 <div>
 @endsection

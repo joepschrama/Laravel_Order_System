@@ -37,7 +37,7 @@
             </div>
             <div class="form__container-item">
               <label for="category">Product category:</label>
-              <select name="category[]" multiple="multiple">
+              <select class="form__input" name="category[]" multiple="multiple">
                   <option value={{$product->category_id}} selected>{{ $product->category->name }}</option>
                   @foreach($categories as $category)
                     @if($category->id != $product->category_id)

@@ -26,4 +26,24 @@
             color: $link-white;
         }
     }
+    
+    &__dropdown {
+        &:hover {
+            .nav__dropdown-content {
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .nav__dropdown-item {
+                
+            }
+        }
+        
+        &-content {
+            display: none;
+        }
+    }
 }
+
+
+

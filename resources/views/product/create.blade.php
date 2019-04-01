@@ -36,7 +36,7 @@
             </div>
             <div class="form__container-item">
                 <label for="category">Product category:</label>
-                <select name="category" multiple="multiple">
+                <select class="form__input" name="category" multiple="multiple">
                     @foreach($categories as $category)
                         <option value={{$category->id}}>{{ $category->name }}</option>
                     @endforeach
