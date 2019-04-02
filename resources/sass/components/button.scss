@@ -1,0 +1,45 @@
+.btn {
+    font-size: 16px;
+    font-weight: 400;
+    outline: none;
+    border: none;
+    background: none;
+    cursor: pointer;
+    text-decoration: none;
+    padding: 5px;
+    border-radius: 5px;
+    
+    &--small {
+        width: 40px;
+        height: 40px;
+    }
+    
+    &--red {
+        background-color: $danger;
+        color: $icon-white;
+        
+        &:hover {
+            background-color: $danger-dark;
+        }
+    }
+    
+    &--green {
+        background-color: $success;
+        color: $icon-white;
+        
+        &:hover {
+            background-color: $success-dark;
+        }
+    }
+    
+    &--edit {
+        width: 25px;
+        height: 30px;
+        padding: 9px 3px 1px 12px;
+    }
+}
+
+.icon {
+    width: 15px;
+    height: 15px;
+}
