@@ -132,7 +132,11 @@ body {
   color: #ffffff;
 }
 
-.nav__dropdown:hover .nav__dropdown-content {
+.nav__dropdown {
+  cursor: pointer;
+}
+
+.nav__dropdown-content--active {
   display: flex;
   flex-direction: column;
 }

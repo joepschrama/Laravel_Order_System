@@ -28,15 +28,15 @@
     }
     
     &__dropdown {
-        &:hover {
-            .nav__dropdown-content {
-                display: flex;
-                flex-direction: column;
-            }
+        cursor: pointer;
+        
+        &-content--active {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        &-item {
             
-            .nav__dropdown-item {
-                
-            }
         }
         
         &-content {

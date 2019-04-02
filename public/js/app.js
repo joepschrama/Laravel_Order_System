@@ -49180,8 +49180,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Xammp\htdocs\competa\personal-sprint\PHP\Bestelling-opnemen\blog\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Xammp\htdocs\competa\personal-sprint\PHP\Bestelling-opnemen\blog\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Xammp\htdocs\competa\personal-sprint\PHP\Bestelling-opnemen\applicatie\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Xammp\htdocs\competa\personal-sprint\PHP\Bestelling-opnemen\applicatie\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

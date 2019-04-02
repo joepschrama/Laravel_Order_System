@@ -27,3 +27,19 @@
         {{-- <li class="nav__list-item"><a class="nav__list-link" href="/logout">Logout</a></li> --}}
     </ul>
 </nav>
+<script>
+// let dropdown = document.querySelector('.nav__dropdown');
+let dropdownContent = document.querySelector('.nav__dropdown-content');
+let closed = true;
+
+window.onclick = function(event){
+    if(event.target.matches('.nav__dropdown') || event.target.matches('.nav__dropdown-item')) {
+        dropdownContent.classList.remove('nav__dropdown-content');
+        dropdownContent.classList.add('nav__dropdown-content--active');
+    } else {
+        dropdownContent.classList.remove('nav__dropdown-content--active');
+        dropdownContent.classList.add('nav__dropdown-content'); 
+    }
+};
+
+</script>
