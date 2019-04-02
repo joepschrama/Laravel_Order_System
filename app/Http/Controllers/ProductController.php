@@ -40,35 +40,22 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:100'],
-            'price' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string', 'max:100'],
-            'ingredients' => ['required', 'string', 'max:200'],
-            'category' => ['required'],
+        $data = $request->validate([
+            'name' => 'required|string|max:100',
+            'price' => 'required|string|max:255',
+            'description' => 'required|string|max:100',
+            'ingredients' => 'required|string|max:200',
+            'category' => 'required',
         ]);
-        $product = new Product([
-            'name' => $request->get('name'),
-            'price' => $request->get('price'),
-            'description' => $request->get('description'),
-            'ingredients' => $request->get('ingredients'),
-            'category_id' => $request->get('category'),
-        ]);
-        
+        $product = new Product;
+        $product->name = $data['name'];
+        $product->price = $data['price'];
+        $product->description = $data['description'];
+        $product->ingredients = $data['ingredients'];
+        $product->category_id = $data['category'];
         $product->save();
-          
-        return redirect('/product')->with('success', 'Product has been added');
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return redirect('/product')->with('success', 'Product has been added');
     }
 
     /**
@@ -93,26 +80,18 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:100'],
-            'price' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string', 'max:100'],
-            'ingredients' => ['required', 'string', 'max:200'],
-            'category' => ['required'],
+        $data = $request->validate([
+            'name' => 'required|string|max:100',
+            'price' => 'required|string|max:255',
+            'description' => 'required|string|max:100',
+            'ingredients' => 'required|string|max:200',
+            'category' => 'required',
         ]);
-
-        $product->name = $request->get('name');
-        $product->price = $request->get('price');
-        $product->description = $request->get('description');
-        $product->ingredients = $request->get('ingredients');
-        $product->category_id = $request->get('category')[0];
-        
-        // foreach($cats as $cat){
-        //     $product->category_id = $cat;
-        // }
-
-        //dd($product);
-
+        $product->name = $data['name'];
+        $product->price = $data['price'];
+        $product->description = $data['description'];
+        $product->ingredients = $data['ingredients'];
+        $product->category_id = $data['category'][0];
         $product->save();
 
         return redirect('/product')->with('success', 'Product has been updated');

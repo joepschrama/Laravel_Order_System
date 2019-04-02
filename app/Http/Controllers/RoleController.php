@@ -38,27 +38,14 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-    
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
         ]);
-        $role = new Role([
-            'name' => $request->get('name'),
-        ]);
+        $role = new Role;
+        $role->name = $data['name'];
         $role->save();
-          
-        return redirect('/role')->with('success', 'Role has been added');
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return redirect('/role')->with('success', 'Role has been added');
     }
 
     /**
@@ -81,13 +68,12 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
         ]);
-        
-        $role->name = $request->get('name');
+        $role->name = $data['name'];
         $role->save();
-    
+
         return redirect('/role')->with('success', 'Role has been updated');
     }
 

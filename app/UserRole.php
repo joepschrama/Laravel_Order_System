@@ -8,7 +8,7 @@ class UserRole extends Model
 {
     protected $guarded = ['id'];
     public $timestamps = false;
-    
+
     public function role() {
         return $this->hasOne('App\Role', 'id', 'role_id');
     }
