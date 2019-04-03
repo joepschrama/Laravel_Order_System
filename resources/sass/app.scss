@@ -3,25 +3,8 @@
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
-* {
-    font-family: 'Roboto', sans-serif;
-}
-
-.container {
-    width: 90%;
-    margin: auto;
-    display: flex;
-    justify-content: center;
-}
-
-body {
-    margin: 0;
-    padding: 0;
-}
-
-.section {
-    width: 80%;
-}
+// Pages
+@import 'pages/_pages.scss';
 
 // Variables
 @import 'variables';

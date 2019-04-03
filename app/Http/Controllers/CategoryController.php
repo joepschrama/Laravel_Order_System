@@ -41,25 +41,14 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name'=>'required',
-          ]);
-          $category = new Category([
-            'name' => $request->get('name'),
-          ]);
-          $category->save();
-          return redirect('/category')->with('success', 'Category has been added');
-    }
+        $data = $request->validate([
+          'name'=>'required',
+        ]);
+        $category = new Category;
+        $category->name = $data['name'];
+        $category->save();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return redirect('/category')->with('success', 'Category has been added');
     }
 
     /**
@@ -82,14 +71,13 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        $request->validate([
+        $data = $request->validate([
             'name'=>'required',
-          ]);
-    
-          $category->name = $request->get('name');
-          $category->save();
-    
-          return redirect('/category')->with('success', 'Category has been updated');
+        ]);
+        $category->name = $data['name'];
+        $category->save();
+        
+        return redirect('/category')->with('success', 'Category has been updated');
     }
 
     /**

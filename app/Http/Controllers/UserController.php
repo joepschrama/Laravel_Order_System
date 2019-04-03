@@ -34,7 +34,7 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::all();
-        
+
         return view('user.create', compact('roles'));
     }
 
@@ -46,38 +46,25 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:4'],
-            'roles' => [''],
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:4',
+            'roles' => 'required|exists:roles,id',
         ]);
-        $user = new User([
-            'name' => $request->get('name'),
-            'email' => $request->get('email'),
-            'password' => Hash::make($request->get('password')),
-        ]);
+        $user = new User;
+        $user->name = $data['name'];
+        $user->email = $data['email'];
+        $user->password = $data['password'];
         $user->save();
-        
+
         $role = $request['roles'];
         $userRole = new UserRole();
         $userRole->user_id = $user->id;
         $userRole->role_id = $role;
         $userRole->save();
-        
-          
-        return redirect('/user')->with('success', 'User has been added');
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return redirect('/user')->with('success', 'User has been added');
     }
 
     /**
@@ -89,7 +76,7 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $roles = Role::all();
-    
+
         return view('user.edit', compact('user', 'roles'));
     }
 
@@ -102,30 +89,23 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255'],
-            'password' => [''],
-            'roles' => [''],
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',
+            'password' => 'nullable',
+            'roles' => 'required|exists:roles',
         ]);
-        
-        $user->name = $request->get('name');
-        $user->email = $request->get('email');
+        $user->name = $data['name'];
+        $user->email = $data['email'];
         if($user->password) {
-            $user->password = Hash::make($request->get('password'));
+            $user->password = Hash::make($data['password']);
         }
         $user->save();
-        
-        $role = $request['roles'];
-        
+        $role = $data['roles'];
         if (isset($role)) {
             $user->roles()->sync($role);
         }
-        
-        // $userRole->user_id = $user->id;
-        // $userRole->role_id = $role;
-        // $userRole->save();
-    
+
         return redirect('/user')->with('success', 'User has been updated');
     }
 
