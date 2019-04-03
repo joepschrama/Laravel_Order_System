@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Product;
 
 class ProductsTableSeeder extends Seeder
 {
@@ -11,12 +12,6 @@ class ProductsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('products')->insert([
-            'name' => 'Tomatensoep',
-            'price' => '12.99',
-            'description' => 'Romige tomatensoep met balletjes en een broodplankje',
-            'ingredients' => 'Tomaat',
-            'category_id' => '1',
-        ]);
+        $products = factory(Product::class, 10)->create();
     }
 }

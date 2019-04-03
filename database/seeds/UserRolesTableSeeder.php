@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\UserRole;
 
 class UserRolesTableSeeder extends Seeder
 {
@@ -11,9 +12,6 @@ class UserRolesTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('user_roles')->insert([
-            'user_id' => 1,
-            'role_id' => 1,
-        ]);
+        $userRoles = factory(UserRole::class, 10)->create();
     }
 }
