@@ -46,7 +46,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:4',
-            'roles' => 'required',
+            'roles' => 'required|exists:roles,id',
         ]);
         $user = new User;
         $user->name = $data['name'];
@@ -89,7 +89,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
             'password' => 'nullable',
-            'roles' => 'required',
+            'roles' => 'required|exists:roles',
         ]);
         $user->name = $data['name'];
         $user->email = $data['email'];

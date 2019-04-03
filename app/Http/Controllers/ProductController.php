@@ -45,7 +45,7 @@ class ProductController extends Controller
             'price' => 'required|string|max:255',
             'description' => 'required|string|max:100',
             'ingredients' => 'required|string|max:200',
-            'category' => 'required',
+            'category' => 'required|exists:categories,id',
         ]);
         $product = new Product;
         $product->name = $data['name'];
@@ -85,7 +85,7 @@ class ProductController extends Controller
             'price' => 'required|string|max:255',
             'description' => 'required|string|max:100',
             'ingredients' => 'required|string|max:200',
-            'category' => 'required',
+            'category' => 'required|exists:categories,id',
         ]);
         $product->name = $data['name'];
         $product->price = $data['price'];
