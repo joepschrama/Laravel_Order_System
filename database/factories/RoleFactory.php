@@ -5,6 +5,6 @@ use App\Role;
 
 $factory->define(Role::class, function (Faker $faker) {
     return [
-        'name' => $faker->unique()->randomElement($roles = array ('admin','barman','kok')),
+        'name' => $faker->unique()->randomElement($roles = array ('admin','bar','kok')),
     ];
 });

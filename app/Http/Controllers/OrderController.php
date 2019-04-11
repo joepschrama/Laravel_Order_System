@@ -8,14 +8,10 @@ use App\Product;
 use App\Table;
 use App\OrderProduct;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +19,29 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::all();
+        if(Auth::User()->hasRole('admin')) {
+            $orders = Order::all();
+        } else if(Auth::User()->hasRole('bar')) {
+            $orders = [];
+            $allOrders = Order::all();
+            foreach($allOrders as $order) {
+                foreach($order->products as $orderProducts) {
+                    if($orderProducts->category->name == 'Dranken') {
+                        array_push($orders, $order);
+                    }
+                }
+            }
+        } else {
+            $orders = [];
+            $allOrders = Order::all();
+            foreach($allOrders as $order) {
+                foreach($order->products as $orderProducts) {
+                    if($orderProducts->category->name != 'Dranken') {
+                        array_push($orders, $order);
+                    }
+                }
+            }
+        }
 
         return view('order.index', compact('orders'));
     }

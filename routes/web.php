@@ -15,11 +15,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('user', 'UserController');
-Route::resource('category', 'CategoryController')->except('show');
-Route::resource('product', 'ProductController')->except('show');
-Route::resource('role', 'RoleController')->except('show');
-Route::resource('table', 'TableController')->except('show');
+Route::resource('user', 'UserController')->middleware('role:admin');
+Route::resource('category', 'CategoryController')->except('show')->middleware('role:admin');
+Route::resource('product', 'ProductController')->except('show')->middleware('role:admin');
+Route::resource('role', 'RoleController')->except('show')->middleware('role:admin');
+Route::resource('table', 'TableController')->except('show')->middleware('role:admin');
 Route::resource('order', 'OrderController')->except('show');
 
 Auth::routes();

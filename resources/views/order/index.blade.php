@@ -22,6 +22,8 @@
     </thead>
     <tbody>
         @foreach($orders as $order)
+        {{-- @if (Auth::User()->hasRole('admin'))
+        @endif --}}
         <tr class="table__row">
             <td class="table__row-item">{{$order->id}}</td>
             <td class="table__row-item">@if($order->served)True @else False @endif</td>
@@ -41,14 +43,8 @@
                 <button class="btn btn--small btn--red" type="submit"><i class="icon fas fa-trash-alt"></i></button>
               </form>
             </td>
-            {{-- <td class="table__row-item">
-                <form action="{{ route('role.destroy', $role->id)}}" method="post">
-                  @csrf
-                  @method('DELETE')
-                  <button class="btn btn--small btn--red" type="submit"><i class="fas fa-trash-alt"></i></button>
-                </form>
-            </td> --}}
         </tr>
+        
         @endforeach
     </tbody>
   </table>
