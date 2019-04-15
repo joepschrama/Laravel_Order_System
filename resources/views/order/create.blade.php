@@ -20,16 +20,20 @@
               @csrf
               <div class="form__container-item">
                 <label for="name">Order products:</label>
-                {{-- <input class="products_input" type="hidden" name="products[]">
+                <input class="products_input" type="hidden" name="products[]">
                 @foreach($products as $product)
-                  <img value={{$product->id}} class="product__option" src="https://www.okokorecepten.nl/i/recepten/kookboeken/2010/lekker-licht/geroosterde-tomatensoep-500.jpg" width="200">
-                @endforeach --}}
+                  @if($product->category->name == 'Dranken')
+                    <img value={{$product->id}} class="product__option" src="https://www.bbqenzo.nl/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/d/r/drank-alcohol-vrij-bier.jpg" width="200">
+                  @else
+                    <img value={{$product->id}} class="product__option" src="https://www.okokorecepten.nl/i/recepten/kookboeken/2010/lekker-licht/geroosterde-tomatensoep-500.jpg" width="200">
+                  @endif
+                @endforeach
 
-                <select class="form__input" name="products[]" multiple>
+                {{-- <select class="form__input products_input" name="products[]" multiple>
                   @foreach($products as $product)
                     <option value={{$product->id}}>{{ $product->name }}</option>
                   @endforeach
-                </select>
+                </select> --}}
               </div>
               <div class="form__container-item">
                 <label for="name">Order table:</label>
@@ -47,6 +51,7 @@
 <script>
 let productOption = document.getElementsByClassName('product__option');
 let selectedProducts = [];
+
 let productsInput = document.querySelector('.products_input');
 
 for( let i = 0; i < productOption.length; i++) {
@@ -56,9 +61,7 @@ for( let i = 0; i < productOption.length; i++) {
 function addProduct(product) {
   selectedProducts.push(product);
   productsInput.value = selectedProducts;
-  console.log(productsInput);
+  console.log(selectedProducts);
 }
-
-
 </script>
 @endsection

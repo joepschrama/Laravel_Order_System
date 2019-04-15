@@ -28,6 +28,7 @@ class OrderController extends Controller
                 foreach($order->products as $orderProducts) {
                     if($orderProducts->category->name == 'Dranken') {
                         array_push($orders, $order);
+                        break;
                     }
                 }
             }
@@ -38,6 +39,7 @@ class OrderController extends Controller
                 foreach($order->products as $orderProducts) {
                     if($orderProducts->category->name != 'Dranken') {
                         array_push($orders, $order);
+                        break;
                     }
                 }
             }
@@ -67,21 +69,20 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'products' => ['required'],
             'table_nr' => ['required'],
         ]);
         $order = new Order([
             'served' => false,
             'time' => Carbon::now(),
-            'table_id' => $request->get('table_nr'),
+            'table_id' => $data['table_nr'],
             'done' => false,
         ]);
         $order->save();
         
-        //dd($request);
-
-        foreach($request['products'] as $product) {
+        $products = explode(",", $data['products'][0]);
+        foreach($products as $product) {
             $productOrder = new OrderProduct();
             $productOrder->order_id = $order->id;
             $productOrder->product_id = $product;
@@ -90,18 +91,6 @@ class OrderController extends Controller
         
         return redirect('/order')->with('success', 'Order has been added');
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -125,19 +114,19 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        $request->validate([
+        $data = $request->validate([
             'served' => ['required', 'string', 'max:255'],
             'done' => ['required', 'string', 'max:255'],
             'products' => ['required'],
             'table_nr' => ['required'],
         ]);
         
-        $order->served = $request->get('served');
-        $order->done = $request->get('done');
-        $order->table_id = $request->get('table_nr');
+        $order->served = $data['served'];
+        $order->done = $data['done'];
+        $order->table_id = $data['table_nr'];
         $order->save();
         
-        $products = $request['products'];
+        $products = $data['products'];
         if (isset($products)) {
             $order->products()->detach();
             foreach($products as $product) {

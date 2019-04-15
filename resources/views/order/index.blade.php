@@ -30,7 +30,17 @@
             <td class="table__row-item">{{$order->time}}</td>
             <td class="table__row-item">
               @foreach ($order->products as $product)
-              {{$product->name}}
+              @if (Auth::User()->hasRole('admin'))
+                {{$product->name}}
+              @elseif (Auth::User()->hasRole('kok'))
+                @if($product->category->name != 'Dranken')
+                  {{$product->name}}
+                @endif
+              @else
+                @if($product->category->name == 'Dranken')
+                  {{$product->name}}
+                @endif
+              @endif
               @endforeach
             </td>
             <td class="table__row-item">{{$order->table->table_nr}}</td>
