@@ -6,7 +6,7 @@ use App\Product;
 $factory->define(Product::class, function (Faker $faker) {
     $faker = \Faker\Factory::create();
     $faker->addProvider(new \FakerRestaurant\Provider\en_US\Restaurant($faker));
-    
+
     return [
         'name' => $faker->foodName(),
         'price' => '9.99',
