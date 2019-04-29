@@ -20,7 +20,7 @@
               @csrf
               <div class="form__container-item">
                 <label for="name">Order products:</label>
-                <input class="products_input" type="hidden" name="products[]">
+                <input class="products_input" type="hidden" name="products">
                 @foreach($products as $product)
                   @if($product->category->name == 'Dranken')
                     <img value={{$product->id}} class="product__option" src="https://www.bbqenzo.nl/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/d/r/drank-alcohol-vrij-bier.jpg" width="200">

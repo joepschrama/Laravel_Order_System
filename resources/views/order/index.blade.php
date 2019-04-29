@@ -21,7 +21,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach($orders as $order)
+        @foreach($orders as $key => $order)
         {{-- @if (Auth::User()->hasRole('admin'))
         @endif --}}
         <tr class="table__row">
@@ -29,19 +29,9 @@
             <td class="table__row-item">@if($order->served)True @else False @endif</td>
             <td class="table__row-item">{{$order->time}}</td>
             <td class="table__row-item">
-              @foreach ($order->products as $product)
-              @if (Auth::User()->hasRole('admin'))
-                {{$product->name}}
-              @elseif (Auth::User()->hasRole('kok'))
-                @if($product->category->name != 'Dranken')
-                  {{$product->name}}
-                @endif
-              @else
-                @if($product->category->name == 'Dranken')
-                  {{$product->name}}
-                @endif
-              @endif
-              @endforeach
+                @foreach($allProducts[$key] as $pr)
+                    {{ $pr  }}
+                @endforeach
             </td>
             <td class="table__row-item">{{$order->table->table_nr}}</td>
             <td class="table__row-item">@if($order->done)True @else False @endif</td></td>

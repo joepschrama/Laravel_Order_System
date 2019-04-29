@@ -9,6 +9,7 @@ use App\Table;
 use App\OrderProduct;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Mockery\Undefined;
 
 class OrderController extends Controller
 {
@@ -19,33 +20,75 @@ class OrderController extends Controller
      */
     public function index()
     {
+        $orders = [];
+        $allOrders = Order::all();
         if(Auth::User()->hasRole('admin')) {
             $orders = Order::all();
+            $filter = 'admin';
         } else if(Auth::User()->hasRole('bar')) {
-            $orders = [];
-            $allOrders = Order::all();
-            foreach($allOrders as $order) {
-                foreach($order->products as $orderProducts) {
-                    if($orderProducts->category->name == 'Dranken') {
-                        array_push($orders, $order);
-                        break;
-                    }
-                }
-            }
+            $filter = 'bar';
         } else {
-            $orders = [];
-            $allOrders = Order::all();
-            foreach($allOrders as $order) {
-                foreach($order->products as $orderProducts) {
-                    if($orderProducts->category->name != 'Dranken') {
-                        array_push($orders, $order);
-                        break;
-                    }
-                }
-            }
+            $filter = 'kok';
         }
 
-        return view('order.index', compact('orders'));
+        if($filter != 'admin') {
+            $arrayProducts = [];
+
+            foreach($allOrders as $order) {
+                foreach($order->products as $orderProducts) {
+                    if($filter == 'bar') {
+                        if($orderProducts->category->name == 'Dranken') {
+                            array_push($orders, $order);
+                            break;
+                        }
+                    } else if($filter == 'kok') {
+                        if($orderProducts->category->name != 'Dranken') {
+                            array_push($arrayProducts, $order->products);
+                            
+                            array_push($orders, $order);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            $allProducts = [];
+
+            foreach($arrayProducts as $arrayProduct) {
+                $productNames = [];
+                $allProductsTest = [];
+                for($i = 0; $i < count($arrayProduct); $i++) {
+                    array_push($productNames, $arrayProduct[$i]->name);
+                }
+
+                $testArray = array_count_values($productNames);
+                foreach($testArray as $key => $test) {
+                    $pieces = explode("=>", $test);
+//                    array_push($allProductsTest, $pieces[0] .'x ' . $arrayProduct[$index]->name);
+                    // if($index != 0) {
+                    //     if($arrayProduct[$index]->name == $arrayProduct[$index++]->name) {
+                    //         $index++;$index++;
+                    //     } else {
+                            
+                    //     }
+                    // } else {
+                    //     $index++;
+                    // }
+//                    if($index > 0) {
+//                        if($arrayProduct[$index]->name == $arrayProduct[$index]->name) {
+                            //$index++;
+//                        }
+//                    }
+//                    if($index > 0) {
+//                        $index++;
+//                    }
+                    array_push($allProductsTest, $pieces[0] .'x ' . $key);
+                }
+                array_push($allProducts, $allProductsTest);
+            }
+            //dump($allProducts);
+        }
+        return view('order.index', compact('orders', 'allProducts'));
     }
 
     /**
@@ -81,14 +124,13 @@ class OrderController extends Controller
         ]);
         $order->save();
         
-        $products = explode(",", $data['products'][0]);
+        $products = explode(",", $data['products']);
         foreach($products as $product) {
             $productOrder = new OrderProduct();
             $productOrder->order_id = $order->id;
             $productOrder->product_id = $product;
             $productOrder->save();
         }
-        
         return redirect('/order')->with('success', 'Order has been added');
     }
     /**
