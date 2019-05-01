@@ -22,6 +22,8 @@ Route::resource('role', 'RoleController')->except('show')->middleware('role:admi
 Route::resource('table', 'TableController')->except('show')->middleware('role:admin');
 Route::resource('order', 'OrderController')->except('show');
 
+Route::post('/order/ready', 'OrderController@orderReady')->name('order.ready');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

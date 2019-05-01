@@ -17,7 +17,8 @@ class CreateOrdersTable extends Migration
             $table->bigIncrements('id');
             $table->boolean('served');
             $table->time('time');
-            $table->boolean('done');
+            $table->boolean('done_kok');
+            $table->boolean('done_bar');
             $table->unsignedBigInteger('table_id');
             $table->foreign('table_id')->references('id')->on('tables');
             $table->timestamps();

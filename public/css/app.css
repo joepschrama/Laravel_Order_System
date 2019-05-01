@@ -18,6 +18,73 @@ body {
   width: 80%;
 }
 
+.section__title {
+  text-align: center;
+}
+
+.order__container {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  margin-bottom: 15px;
+  min-height: 180px;
+}
+
+.order__products {
+  margin-top: 20px;
+  width: 50%;
+}
+
+.order__product {
+  display: flex;
+  flex-direction: row;
+}
+
+.order__product-name {
+  text-align: center;
+  min-width: 250px;
+  border: 1px solid black;
+}
+
+.order__product-amount {
+  text-align: center;
+  min-width: 100px;
+  border: 1px solid black;
+}
+
+.order__table {
+  margin-top: 5px;
+  text-align: center;
+}
+
+.order__field {
+  margin: 0 20px;
+  display: flex;
+  flex-direction: row;
+}
+
+.order__ready {
+  background: lightgreen;
+}
+
+.order__notReady {
+  background: lightcoral;
+}
+
+.order__served {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.order__served-button {
+  width: 150px;
+  height: 75px;
+  outline: none;
+  border: 1px solid grey;
+}
+
 .btn {
   font-size: 16px;
   font-weight: 400;

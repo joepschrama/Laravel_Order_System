@@ -16,4 +16,68 @@ body {
 
 .section {
     width: 80%;
+
+    &__title {
+        text-align: center;
+    }
 }
+
+.order {
+    &__container {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid black;
+        margin-bottom: 15px;
+        min-height: 180px;
+    }
+    &__products {
+        margin-top: 20px;
+        width: 50%;
+    }
+    &__product {
+        display: flex;
+        flex-direction: row;
+
+        &-name {
+            text-align: center;
+            min-width: 250px;
+            border: 1px solid black;
+        }
+        &-amount {
+            text-align: center;
+            min-width: 100px;
+            border: 1px solid black;
+        }
+    }
+    &__table {
+        margin-top: 5px;
+        text-align: center;
+    }
+    &__field {
+        margin: 0 20px;
+        display: flex;
+        flex-direction: row;
+    }
+    &__ready {
+        background: lightgreen;
+    }
+
+    &__notReady {
+        background: lightcoral;
+    }
+
+    &__served {
+        width: 50%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+
+        &-button {
+            width: 150px;
+            height: 75px;
+            outline: none;
+            border: 1px solid grey;
+        }
+    }
+}
+

@@ -15,7 +15,8 @@ class OrdersTableSeeder extends Seeder
         DB::table('orders')->insert([
             'served' => false,
             'time' => Carbon::now(),
-            'done' => false,
+            'done_kok' => false,
+            'done_bar' => false,
             'table_id' => 1,
         ]);
     }

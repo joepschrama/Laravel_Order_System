@@ -56,9 +56,11 @@ class OrderController extends Controller
         }
 
         $allProducts = [];
+        $productCounts = [];
         foreach($arrayProducts as $arrayProduct) {
             $productNames = [];
             $allProductsArray = [];
+            $productCountsArray = [];
             for($i = 0; $i < count($arrayProduct); $i++) {
                 if($filter == 'bar') {
                     if($arrayProduct[$i]->category->name == 'Dranken') {
@@ -76,12 +78,14 @@ class OrderController extends Controller
             $productNamesArray = array_count_values($productNames);
             foreach($productNamesArray as $key => $productName) {
                 $pieces = explode("=>", $productName);
-                array_push($allProductsArray, $pieces[0] .'x ' . $key);
+                array_push($productCountsArray, $pieces[0]);
+                array_push($allProductsArray, $key);
             }
+            array_push($productCounts, $productCountsArray);
             array_push($allProducts, $allProductsArray);
         }
 
-        return view('order.index', compact('orders', 'allProducts'));
+        return view('order.index', compact('orders', 'allProducts', 'productCounts'));
     }
 
     /**
@@ -109,14 +113,15 @@ class OrderController extends Controller
             'products' => ['required'],
             'table_nr' => ['required'],
         ]);
-        $order = new Order([
-            'served' => false,
-            'time' => Carbon::now(),
-            'table_id' => $data['table_nr'],
-            'done' => false,
-        ]);
+
+        $order = new Order;
+        $order->served = false;
+        $order->time = Carbon::now();
+        $order->done_kok = false;
+        $order->done_bar = false;
+        $order->table_id = $data['table_nr'];
         $order->save();
-        
+
         $products = explode(",", $data['products']);
         foreach($products as $product) {
             $productOrder = new OrderProduct();
@@ -157,7 +162,8 @@ class OrderController extends Controller
         ]);
         
         $order->served = $data['served'];
-        $order->done = $data['done'];
+        $order->done_kok = $data['done'];
+        $order->done_bar = false;
         $order->table_id = $data['table_nr'];
         $order->save();
         
@@ -171,10 +177,6 @@ class OrderController extends Controller
                 $productOrder->save();
             }
         }
-
-        // $ordersTable = Table::find(1)->orders;
-        // dd($ordersTable);
-
         return redirect('/order')->with('success', 'Order has been updated');
     }
 
@@ -188,5 +190,26 @@ class OrderController extends Controller
     {
         $order->delete();
         return redirect('/order')->with('success', 'Order has been deleted');
+    }
+    
+    public function orderReady(Request $request)
+    {
+        $data = $request->validate([
+            'orderId' => 'required',
+            'role' => 'required'
+        ]);
+        
+        $order = Order::find($data['orderId']);
+        if($data['role'] == 'admin') {
+            $order->done_kok = 1;
+            $order->done_bar = 1;
+        } else {
+            if($data['role'] == 'kok') {
+                $order->done_kok = 1;
+            } else {
+                $order->done_bar = 1;
+            }
+        }
+        $order->save();
     }
 }
