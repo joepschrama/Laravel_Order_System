@@ -9,7 +9,6 @@ use App\Table;
 use App\OrderProduct;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Mockery\Undefined;
 
 class OrderController extends Controller
 {
@@ -211,5 +210,94 @@ class OrderController extends Controller
             }
         }
         $order->save();
+    }
+    
+    public function getData()
+    {
+//         $orders = [];
+//         $allOrders = Order::all();
+//         if(Auth::User()->hasRole('admin')) {
+//             $filter = 'admin';
+//         } else if(Auth::User()->hasRole('bar')) {
+//             $filter = 'bar';
+//         } else {
+//             $filter = 'kok';
+//         }
+//         $arrayProducts = [];
+//         if($filter != 'admin') {
+//             foreach($allOrders as $order) {
+//                 foreach($order->products as $orderProducts) {
+//                     if($filter == 'bar') {
+//                         if($orderProducts->category->name == 'Dranken') {
+//                             array_push($arrayProducts, $order->products);
+//                             array_push($orders, $order);
+//                             break;
+//                         }
+//                     } else if($filter == 'kok') {
+//                         if($orderProducts->category->name != 'Dranken') {
+//                             array_push($arrayProducts, $order->products);
+//                             array_push($orders, $order);
+//                             break;
+//                         }
+//                     }
+//                 }
+//             }
+//         } else {
+//             foreach($allOrders as $order) {
+//                 array_push($arrayProducts, $order->products);
+//                 array_push($orders, $order);
+//             }
+//         }
+
+//         $allProducts = [];
+//         $productCounts = [];
+//         foreach($arrayProducts as $arrayProduct) {
+//             $productNames = [];
+//             $allProductsArray = [];
+//             $productCountsArray = [];
+//             for($i = 0; $i < count($arrayProduct); $i++) {
+//                 if($filter == 'bar') {
+//                     if($arrayProduct[$i]->category->name == 'Dranken') {
+//                         array_push($productNames, $arrayProduct[$i]->name);
+//                     }
+//                 } else if($filter == 'kok') {
+//                     if($arrayProduct[$i]->category->name != 'Dranken') {
+//                         array_push($productNames, $arrayProduct[$i]->name);
+//                     }
+//                 } else {
+//                     array_push($productNames, $arrayProduct[$i]->name);
+//                 }
+//             }
+
+//             $productNamesArray = array_count_values($productNames);
+//             foreach($productNamesArray as $key => $productName) {
+//                 $pieces = explode("=>", $productName);
+//                 array_push($productCountsArray, $pieces[0]);
+// //                $orders['amount'] = $pieces[0];
+//                 array_push($allProductsArray, $key);
+//             }
+//             array_push($productCounts, $productCountsArray);
+//             array_push($allProducts, $allProductsArray);
+//         }
+        $user = Auth::User();
+        if($user->hasRole('admin')) {
+            $orders = Order::all();
+        } else if($user->hasRole('ober')) {
+            $order = Order::where('done_kok', true)->orWhere('done_bar', true);
+        } else if($user->hasRole('kok')) {
+            $order = Order::where('done_kok', false);
+        } else {
+            $order = Order::where('done_bar', false);
+        }
+
+
+        foreach($orders as $order) {
+            $order->table;
+            $order->products;
+            foreach($order->products as $key => $product) {
+                
+            }
+        }
+        return response()->json($orders);
     }
 }

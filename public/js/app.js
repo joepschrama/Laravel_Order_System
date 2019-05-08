@@ -131,6 +131,7 @@ function () {
         _this.changeButton(button);
       });
     });
+    this.getOrders();
   }
 
   _createClass(Order, [{
@@ -162,6 +163,82 @@ function () {
     value: function changeButton(button) {
       button.classList.remove('order__notReady');
       button.classList.add('order__ready');
+    }
+  }, {
+    key: "getOrders",
+    value: function getOrders() {
+      setInterval(function () {
+        var section = document.getElementsByClassName('section')[0];
+        var orderContainer = document.getElementsByClassName('order__container');
+        var table = document.getElementsByClassName('order__tableNr');
+        var name = document.getElementsByClassName('user__name');
+        var email = document.getElementsByClassName('user__email');
+        fetch('/order/json').then(function (response) {
+          return response.json();
+        }).then(function (json) {
+          console.log(json);
+
+          if (json.length > orderContainer.length) {
+            var container = document.createElement("div");
+            container.classList = 'order__container';
+
+            var _table = document.createElement("order__table");
+
+            _table.classList = 'order__table';
+            var tableText = document.createTextNode("Tafel");
+
+            _table.appendChild(tableText);
+
+            var tableNr = document.createElement('span');
+            tableNr.classList = 'order__tableNr';
+            tableNr.textContent = json[json.length - 1].table.table_nr;
+
+            _table.appendChild(tableNr);
+
+            var orderField = document.createElement('div');
+            orderField.classList = 'order__field';
+            orderProducts = document.createElement('div');
+            orderProducts.classList = 'order__products';
+            console.log('products');
+
+            for (var i = 0; i < json[json.length - 1].products.length; i++) {
+              orderProduct = document.createElement('div');
+              orderProduct.classList = 'order__product';
+              orderProducts.appendChild(orderProduct);
+              productName = document.createElement('div');
+              productName.classList = 'order__product-name';
+              productName.textContent = json[json.length - 1].products[i].name;
+              productAmount = document.createElement('div');
+              productAmount.classList = 'order__product-amount';
+              productAmount.textContent = 1;
+              orderProduct.appendChild(productName);
+              orderProduct.appendChild(productAmount);
+            }
+
+            var orderServed = document.createElement('div');
+            orderServed.classList = 'order__served';
+            var orderServedText = document.createElement('h3');
+            orderServedText.textContent = 'Klaar om te serveren?';
+            var orderServedButton = document.createElement('button');
+            orderServedButton.classList = 'order__served-button order__notReady';
+            orderServedButton.setAttribute('order_id', json[json.length - 1].id);
+            orderServedButton.setAttribute('role', 'kok'); //fix this
+
+            orderServedButton.textContent = 'Klaar';
+            orderServed.appendChild(orderServedText);
+            orderServed.appendChild(orderServedButton);
+            orderField.appendChild(orderProducts);
+            orderField.appendChild(orderServed);
+            container.appendChild(_table);
+            container.appendChild(orderField);
+            section.appendChild(container);
+          } else {
+            for (var _i = 0; _i < json.length; _i++) {
+              table[_i].textContent = json[_i].table.table_nr;
+            }
+          }
+        });
+      }, 2000);
     }
   }]);
 

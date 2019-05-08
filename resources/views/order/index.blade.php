@@ -4,7 +4,7 @@
 <div class="section">
   @if(session()->get('success'))
     <div>
-      {{ session()->get('success') }}  
+      {{ session()->get('success') }}
     </div><br />
   @endif
   <h1 class="section__title">Order overzicht</h1>
@@ -41,10 +41,26 @@
 {{--        @endforeach--}}
 {{--    </tbody>--}}
 {{--  </table>--}}
-    @foreach($orders as $key => $order)
-      @if(!$order->done_kok && Auth::user()->roles[0]->name == 'kok' || !$order->done_bar && Auth::user()->roles[0]->name == 'bar' || Auth::user()->roles[0]->name == 'admin' )
+      {{-- <div class="order__container">
+          <div class="order__table">Tafel x</div>
+          <div class="order__field">
+              <div class="order__products">
+                  <div class="order__product">
+                      <div class="order__product-name">naampie</div>
+                      <div class="order__product-amount"> 2 X </div>
+                  </div>
+              </div>
+              <div class="order__served">
+                  <h3>Klaar om te serveren?</h3>
+                  <button class="order__served-button order__notReady" order_id='id' role='role'>Klaar</button>
+              </div>
+          </div>
+      </div> --}}
+
+      @foreach($orders as $key => $order)
+      {{-- @if(!$order->done_kok && Auth::user()->roles[0]->name == 'kok' || !$order->done_bar && Auth::user()->roles[0]->name == 'bar' || Auth::user()->roles[0]->name == 'admin' && $order->done_br || Auth::user()->roles[0]->name == 'admin' && $order->done_kok) --}}
       <div class="order__container">
-          <div class="order__table">Tafel {{ $order->table->table_nr }}</div>
+          <div class="order__table">Tafel <span class="order__tableNr">{{ $order->table->table_nr }}</span></div>
           <div class="order__field">
               <div class="order__products">
                   @foreach($allProducts[$key] as $productIndex => $pr)
@@ -60,8 +76,8 @@
               </div>
           </div>
       </div>
-      @endif
-    @endforeach
+      {{-- @endif --}}
+      @endforeach
   <a class="btn btn--green" href="{{ route('order.create')}}">Add order <i class="fas fa-plus"></i></a>
 <div>
 @endsection

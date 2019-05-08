@@ -23,7 +23,7 @@ Route::resource('table', 'TableController')->except('show')->middleware('role:ad
 Route::resource('order', 'OrderController')->except('show');
 
 Route::post('/order/ready', 'OrderController@orderReady')->name('order.ready');
-
+Route::get('/order/json', 'OrderController@getData')->name('order.index.json');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
