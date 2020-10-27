@@ -32,7 +32,7 @@
         </div>
         <div class="form__container-item">
           <label for="roles">User Role:</label>
-          <select name="roles">
+          <select class="form__input" name="roles">
             <option value={{$user->roles[0]->id}}>{{ $user->roles[0]->name }}</option>
             @foreach($roles as $role)
               @if($role->id != $user->roles[0]->id)

@@ -37,6 +37,6 @@
         @endforeach
     </tbody>
   </table>
-  <a class="btn btn--green" href="{{ route('product.create')}}">Add user <i class="fas fa-plus"></i></a>
+  <a class="btn btn--green" href="{{ route('product.create')}}">Add product <i class="fas fa-plus"></i></a>
 <div>
 @endsection

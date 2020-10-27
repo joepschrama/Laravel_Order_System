@@ -25,4 +25,21 @@
             color: $link-white;
         }
     }
+    
+    &__dropdown {
+        cursor: pointer;
+        
+        &-content--active {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        &-item {
+            
+        }
+        
+        &-content {
+            display: none;
+        }
+    }
 }
